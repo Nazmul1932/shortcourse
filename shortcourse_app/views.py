@@ -41,3 +41,13 @@ def logout_user(request):
     return redirect('login_user')
 
 
+def signup_admin(request):
+    return render(request, 'signup_admin_page.html')
+
+
+def signup_student(request):
+    return None
+
+
+def signup_instructor(request):
+    return None
