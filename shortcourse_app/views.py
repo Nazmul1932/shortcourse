@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from shortcourse_app.EmailBackend import EmailBackend
 from django.contrib import messages
 from .models import *
+from django.core.files.storage import FileSystemStorage
 
 
 def login_user(request):
@@ -26,7 +27,7 @@ def do_login(request):
 
         else:
             messages.error(request, 'Invalid login details')
-            return HttpResponseRedirect('login_user')
+            return HttpResponseRedirect('/')
 
 
 def get_user_details(request):
@@ -41,13 +42,3 @@ def logout_user(request):
     return redirect('login_user')
 
 
-def signup_admin(request):
-    return render(request, 'signup_admin_page.html')
-
-
-def signup_student(request):
-    return None
-
-
-def signup_instructor(request):
-    return None

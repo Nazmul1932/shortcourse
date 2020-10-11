@@ -7,6 +7,7 @@ class LoginCheckMiddleWare(MiddlewareMixin):
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         module_name = view_func.__module__
+        print(module_name)
         user = request.user
 
         if user.is_authenticated:
@@ -33,7 +34,7 @@ class LoginCheckMiddleWare(MiddlewareMixin):
 
                 if module_name == 'shortcourse_app.student_view' or module_name == 'django.views.static':
                     pass
-                elif module_name == 'shortcourse_app.views' or module_name == 'django.views.static':
+                elif module_name == 'shortcourse_app.views':
                     pass
                 else:
                     return HttpResponseRedirect(reverse('student_home'))
@@ -41,7 +42,8 @@ class LoginCheckMiddleWare(MiddlewareMixin):
                 return HttpResponseRedirect(reverse('login_user'))
 
         else:
-            if request.path == reverse('login_user') or request.path == reverse('do_login') or module_name == 'django.contrib.auth.views':
+            if request.path == reverse('login_user') or request.path == reverse('do_login') or module_name == 'django.contrib.auth.views' or module_name == 'django.contrib.admin.sites':
+
                 pass
             else:
                 return HttpResponseRedirect(reverse('login_user'))

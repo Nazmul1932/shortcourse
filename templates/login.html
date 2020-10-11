@@ -53,21 +53,43 @@
             <div class="col-12">
                 <button type="submit" class="btn btn-primary btn-block">Sign In</button>
             </div><br><br>
+
             <div class="col-12 text-center">
                 <button type="submit" class="btn btn-light btn-block">
                     <a href="{% url 'password_reset' %}">Reset Password</a>
                 </button>
             </div>
+
+{#            <div class="col-12 text-center">#}
+{#                <button type="submit" class="btn btn-light btn-block">#}
+{#                    <a href="{% url 'signup_admin' %}">Admin Signup</a>#}
+{#                </button>#}
+{#            </div>#}
+{#            <div class="col-12 text-center">#}
+{#                <button type="submit" class="btn btn-light btn-block">#}
+{#                    <a href="{% url 'signup_student' %}">Student Signup</a>#}
+{#                </button>#}
+{#            </div>#}
+{#            <div class="col-12 text-center">#}
+{#                <button type="submit" class="btn btn-light btn-block">#}
+{#                    <a href="{% url 'signup_instructor' %}">Instructor Signup</a>#}
+{#                </button>#}
+{#            </div>#}
           <!-- /.col -->
-            {% if messages %}
-            <div class="col-12">
-                {% for message in messages %}
-                    {% if message.tags == 'error' %}
-                        <div class="alert alert-danger" style="margin-top: 10px">{{ message }}</div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
+             <div class="row">
+                {% if messages %}
+                    <div class="col-12">
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                                <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                            {% endif %}
+                            {% if message.tags == 'success' %}
+                                <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+             </div>
 
         </div>
       </form>

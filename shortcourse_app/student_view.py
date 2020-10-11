@@ -29,13 +29,13 @@ def student_home(request):
         data_present.append(attendance_present_count)
         data_absent.append(attendance_absent_count)
 
-    attendance_avg = attendance_present/attendance_total
-    attendance_round = attendance_avg * 100
-    attendance_percent = round(attendance_round, 2)
+    # attendance_avg = attendance_present/attendance_total
+    # attendance_round = attendance_avg * 100
+    # attendance_percent = round(attendance_round, 2)
 
     context = {
         'attendance_total': attendance_total,
-        'attendance_percent': attendance_percent,
+        # 'attendance_percent': attendance_percent,
         'attendance_present': attendance_present,
         'attendance_absent': attendance_absent,
         'course_name': course_name,

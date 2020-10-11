@@ -11,9 +11,13 @@ urlpatterns = [
     path('logout_user/', views.logout_user, name='logout_user'),
 
 
-    path('signup_admin/', views.signup_admin, name='signup_admin'),
-    path('signup_student/', views.signup_student, name='signup_student'),
-    path('signup_instructor/', views.signup_instructor, name='signup_instructor'),
+    # path('signup_admin/', views.signup_admin, name='signup_admin'),
+    # path('signup_student/', views.signup_student, name='signup_student'),
+    # path('signup_instructor/', views.signup_instructor, name='signup_instructor'),
+    #
+    # path('do_admin_signup/', views.do_admin_signup, name='do_admin_signup'),
+    # path('do_signup_student/', views.do_signup_student, name='do_signup_student'),
+    # path('do_signup_instructor/', views.do_signup_instructor, name='do_signup_instructor'),
 
 
     # admins view

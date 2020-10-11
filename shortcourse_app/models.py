@@ -71,7 +71,6 @@ class Subjects(models.Model):
 class Students(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     id = models.AutoField(primary_key=True)
-    full_name = models.CharField(max_length=200, null=True)
     fathers_name = models.CharField(max_length=200, null=True)
     mothers_name = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200, null=True)
