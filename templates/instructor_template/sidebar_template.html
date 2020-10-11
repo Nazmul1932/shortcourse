@@ -1,0 +1,92 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+
+
+      <span class="brand-text font-weight-light" style="font-size: 25px">Instructor To DO</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="dist/img/user2-160x160.jpg"  class="img-circle elevation-2" alt="">
+        </div>
+        <div class="info">
+          <a href="{% url 'instructor_profile' %}" class="d-block" style="font-size: 25px">{{ user.username }}</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+          <li class="nav-item">
+              {% url 'instructor_home' as instructor_home %}
+            <a href='{{ instructor_home }}' class="nav-link {% if request.path ==  instructor_home %}active{% endif %}">
+              <i class='fas fa-list-ul' style='font-size:20px; color: red'>  </i>
+              <p>
+                Instructor Home
+              </p>
+            </a>
+          </li>
+
+            <li class="nav-item">
+              {% url 'attendance' as attendance %}
+                <a href='{{ attendance }}' class="nav-link {% if request.path ==  attendance %}active{% endif %}">
+                <i class='fas fa-list-ul' style='font-size:20px; color: red'>  </i>
+                <p>
+                 Attendance
+                </p>
+                </a>
+          </li>
+
+            <li class="nav-item">
+              {% url 'update_attendance' as update_attendance %}
+                <a href='{{ update_attendance }}' class="nav-link {% if request.path ==  update_attendance %}active{% endif %}">
+                <i class='fas fa-list-ul' style='font-size:20px; color: red'>  </i>
+                <p> View & Update Attendance </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'instructor_feedback' as instructor_feedback %}
+                <a href='{{ instructor_feedback }}' class="nav-link {% if request.path ==  instructor_feedback %}active{% endif %}">
+                <i class='fas fa-list-ul' style='font-size:20px; color: red'>  </i>
+                <p> Feedback </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'instructor_apply_leave' as instructor_apply_leave %}
+                <a href='{{ instructor_apply_leave }}' class="nav-link {% if request.path ==  instructor_apply_leave %}active{% endif %}">
+                <i class='fas fa-list-ul' style='font-size:20px; color: red'>  </i>
+                <p> Apply Leave </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+            {% url 'instructor_add_result' as instructor_add_result %}
+            <a href="{{ instructor_add_result }}" class="nav-link {% if request.path == instructor_add_result %} active {% endif %}">
+              <i class='fas fa-list-ul' style='font-size:20px; color: red'>  </i>
+              <p>
+                Add Result
+              </p>
+            </a>
+          </li>
+
+
+
+
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

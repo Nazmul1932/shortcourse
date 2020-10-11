@@ -1,0 +1,81 @@
+{% extends 'admin_template/base_template.html' %}
+{% block page_title %}
+<h1>Add Batch</h1>
+{% endblock page_title %}
+{% block main_content %}
+    <hr>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-dark">
+              <div class="card-header">
+                <h1>Add Batch</h1>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'add_batch_save' %}" method="post">
+                  {% csrf_token %}
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label style="font-size: 20px">Course</label>
+                        <select class="form-control" name="course">
+                            {% for course in courses %}
+                                <option value="{{ course.id }}">
+                                    {{ course.course_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                  <div class="form-group">
+                    <label style="font-size: 20px">Batch Name </label>
+                    <input type="text" class="form-control" name="batch" placeholder="Enter batch..">
+                  </div>
+
+                    <div class="form-group">
+                    <label style="font-size: 20px">Batch time </label>
+                    <input type="time" class="form-control" name="appt" placeholder="Enter time..">
+                  </div>
+
+                     <div class="form-group">
+                    <label>Instructors</label>
+                    <select class="form-control" name="instructor">
+                        {% for instructor in instructors %}
+                          <option value="{{ instructor.id }}">{{ instructor.first_name }} {{ instructor.last_name }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                   <div class="form-group">
+                      {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                        {% endif %}
+                        {% if message.tags == 'success' %}
+                        <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                        {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                    </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-dark btn-block" style="font-size: 25px">Add Batch</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+
+
+
+          </div>
+          </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock main_content %}

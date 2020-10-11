@@ -1,0 +1,95 @@
+{% extends 'instructor_template/instructor_home.html' %}
+{% block page_title %}
+    Apply Leave
+{% endblock page_title %}
+
+{% block main_content %}
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+              <div class="col-md-6">
+            <!-- general form elements -->
+                    <div class="card card-dark">
+
+                        <div class="card-header">
+                            <h1>Apply For Leave</h1>
+                        </div>
+
+                      <form action="{% url 'instructor_apply_leave_save' %}" method="post">
+
+                        {% csrf_token %}
+
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label style="font-size: 20px">Leave Date</label>
+                                <input type="date" name="leave_date" class="form-control" placeholder="Leave Date">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Leave Reason</label>
+                                <textarea class="form-control" rows="6" name="leave_msg"></textarea>
+                            </div>
+
+                             <div class="form-group">
+                                  {% if messages %}
+                                    {% for message in messages %}
+                                    {% if message.tags == 'error' %}
+                                    <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                                    {% endif %}
+                                    {% if message.tags == 'success' %}
+                                    <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                                    {% endif %}
+                                    {% endfor %}
+                                  {% endif %}
+                             </div>
+                        </div>
+
+                        <div class="card-footer">
+                          <button type="submit" class="btn btn-dark btn-block" style="font-size: 25px" id="fetch_student">Apply For Leave</button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="card card-white">
+                        <div class="card-header">
+                        <div class="table">
+                            <h3>Apply Leave History</h3>
+                            <table class="table">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Leave Date</th>
+                                    <th>Leave Message</th>
+                                    <th>Leave Status</th>
+                                </tr>
+                                {% for row in leave_data %}
+                                    <tr>
+                                        <td>{{ row.id }}</td>
+                                        <td>{{ row.leave_date }}</td>
+                                        <td>{{ row.leave_message }}</td>
+                                        <td>
+                                            {% if row.leave_status == 1 %}
+                                                <span class="alert alert-success">Approved</span>
+                                            {% elif row.leave_status == 2 %}
+                                                <span class="alert alert-danger">Rejected</span>
+                                            {% else %}
+                                                <span class="alert alert-info">Pending</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+              </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock main_content %}
+
+
+
+

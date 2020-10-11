@@ -1,0 +1,84 @@
+{% extends 'admin_template/base_template.html' %}
+{% block page_title %}
+Edit Batch | #ID: {{ batches.id }}
+{% endblock page_title %}
+{% block main_content %}
+    <hr>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-dark">
+              <div class="card-header">
+                <h1>Edit Batch</h1>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'edit_batch_save' %}" method="post">
+                  {% csrf_token %}
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label style="font-size: 20px">Course</label>
+                        <select class="form-control" name="course">
+                            {% for course in courses %}
+                                <option value="{{ course.id }}" {% if course.id == batches.course_id.id %}selected{% endif %}>
+                                    {{ course.course_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                  <div class="form-group">
+                    <label style="font-size: 20px">Batch Name </label>
+                    <input type="text" class="form-control" name="batch" placeholder="Enter batch.." value="{{ batches.batch_name }}">
+                      <input type="hidden" name="batch_id" value="{{ batches.id }}">
+                  </div>
+
+                    <div class="form-group">
+                    <label style="font-size: 20px">Batch time </label>
+                    <input type="time" class="form-control" name="appt" placeholder="Enter time.." value="{{ batches.batch_time }}">
+                  </div>
+
+                     <div class="form-group">
+                    <label>Instructors</label>
+                    <select class="form-control" name="instructor">
+                        {% for instructor in instructors %}
+                          <option value="{{ instructor.id }}" {% if instructor.id == batch.instructor_id.id %} selected {% endif %}>{{ instructor.first_name }} {{ instructor.last_name }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+
+                   <div class="form-group">
+                      {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                        {% endif %}
+                        {% if message.tags == 'success' %}
+                        <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                        {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                    </div>
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-dark btn-block" style="font-size: 25px">Save</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+
+
+
+          </div>
+          </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock main_content %}

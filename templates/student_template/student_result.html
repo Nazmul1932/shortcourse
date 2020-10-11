@@ -1,0 +1,52 @@
+{% extends 'student_template/student_home.html' %}
+{% block page_title %}
+Result
+{% endblock page_title %}
+{% block main_content %}
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+                    <div class="row">
+              <div class="col-md-6">
+            <!-- general form elements -->
+
+            <!-- /.card -->
+           <div class="card card-dark">
+              <div class="card-header">
+                <h3 class="card-title">Result</h3>
+              </div>
+
+               <div class="table">
+               <table class="table">
+                   <tr>
+                       <th>ID</th>
+                       <th>Batch</th>
+                       <th>Exam Marks</th>
+                       <th>Status</th>
+                   </tr>
+                   {% for row in student_result %}
+                        <tr>
+                            <td>{{ row.id }}</td>
+                            <td>{{ row.batch_id.batch_name }}</td>
+                            <td>{{ row.course_exam_marks }}</td>
+                            <td>
+                                {% if row.course_exam_marks >= 80 %}
+                                <span class="alert alert-success">PASS</span>
+                                {% else %}
+                                 <span class="alert alert-danger">FAIL</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                   {% endfor %}
+               </table>
+               </div>
+            </div>
+
+
+
+          </div>
+          </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock main_content %}

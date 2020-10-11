@@ -1,0 +1,146 @@
+{% extends 'instructor_template/instructor_home.html' %}
+{% block page_title %}
+    Attendance
+{% endblock page_title %}
+
+{% block main_content %}
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+              <div class="col-md-6">
+            <!-- general form elements -->
+                <div class="card card-dark">
+
+                    <div class="card-header">
+                        <h1>Take Attendance</h1>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label style="font-size: 20px">Batch</label>
+                            <select class="form-control" name="batch" id="batch">
+                                {% for batch in batches %}
+                                    <option value="{{ batch.id }}"> {{ batch.batch_name }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                           <label>Session Year</label>
+                           <select class="form-control" name="session_year" id="session_year">
+                               {% for session_year in session_years %}
+                                  <option value="{{ session_year.id }}">{{ session_year.session_start_year }} TO {{ session_year.session_end_year }}</option>
+                               {% endfor %}
+                           </select>
+                        </div>
+
+                       <div class="form-group">
+                          {% if messages %}
+                            {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                            <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                            {% endif %}
+                            {% if message.tags == 'success' %}
+                            <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                            {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                       </div>
+                    </div>
+                </div>
+
+                    <div class="card-footer">
+                      <button type="button" class="btn btn-dark btn-block" style="font-size: 25px" id="fetch_student">Fetching Student</button>
+                    </div>
+
+                  <div id="student_data" class="card-footer">
+
+                  </div>
+
+                </div>
+              </div>
+          </div>
+      </div>
+    </section>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+    <script>
+
+        $(document).ready(function () {
+            $("#fetch_student").click(function () {
+                var batch = $("#batch").val()
+                var session_year = $("#session_year").val()
+
+                $.ajax({
+                    url: {% url 'get_students' %},
+                    type: 'POST',
+                    data: {batch: batch, session_year:session_year},
+                })
+                .done(function (response) {
+                   var json_data = JSON.parse(response);
+                    console.log(json_data);
+                    var div_data = "<div class='form-group'><label>Attendance Date</label><input type='date' name='attendance_date' id='attendance_date' class='form-control'></div><div class='form-group'><div class='row'>";
+                    for(key in json_data){
+                        div_data += "<div class='col-lg-6'><div class='form-check'><input type='checkbox' checked='checked' name='student_data[]' value='"+json_data[key]['id']+"'><label class='form-check-label'>" + json_data[key]['name']+"</label></div></div>";
+                    }
+                    div_data += "</div></div>";
+                    div_data += "</div class='form-group'>";
+                    div_data += "<button id='save_attendance' class='btn btn-success btn-dark btn-lg' type='button'>Save Attendance</button>";
+                    $('#student_data').html(div_data);
+                })
+                .fail(function () {
+                    alert("Error");
+                })
+
+                $(document).on("click", "#save_attendance", function () {
+
+                    $(this).attr('disabled', 'disabled')
+                    $(this).text('Saving attendance data...')
+                    var student_data = $("input[name='student_data[]']").map(function () {
+                        if($(this).is(':checked')){
+                            return {"id":$(this).val(), 'status':1};
+                        }
+                        else {
+                            return {"id":$(this).val(), 'status':0};
+                        }
+                    }).get()
+
+                    var attendance_date = $('#attendance_date').val();
+                    var batch_id = $('#batch').val();
+                    var session_year_id = $('#session_year').val();
+                    console.log(student_data);
+                    student_data = JSON.stringify(student_data)
+
+
+                        $.ajax({
+                        url: {% url 'save_attendance_date' %},
+                        type: 'POST',
+                        data: {student_ids: student_data, attendance_date:attendance_date, batch_id:batch, session_year_id:session_year},
+                        })
+
+                        .done(function (response) {
+                            if(response=='OK'){
+                                alert('attendance save')
+                            }
+                            else {
+                                alert('error saving attendance..')
+                            }
+                            location.reload()
+
+                         })
+                         .fail(function () {
+                            alert("Error in saving student");
+                         })
+                })
+            })
+        })
+
+
+    </script>
+{% endblock custom_js %}
+
+

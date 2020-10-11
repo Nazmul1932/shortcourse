@@ -1,0 +1,193 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src='{% static "dist/img/AdminLTELogo.png" %}' alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light" style="font-size: 25px">AdminToDo</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="dist/img/user2-160x160.jpg"  class="img-circle elevation-2" alt="">
+        </div>
+        <div class="info">
+          <a href="{% url 'admin_profile' %}" class="d-block" style="font-size: 25px">{{ user.username }}</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+
+          <li class="nav-item">
+              {% url 'admin_home' as admin_home %}
+                <a href='{{ admin_home }}' class="nav-link {% if request.path ==  admin_home %}active{% endif %}">
+                  <i class='fas fa-list-ul' style='font-size:20px; color: red'>  </i>
+                  <p>
+                    Home
+                  </p>
+                </a>
+          </li>
+
+          <li class="nav-item">
+              {% url 'add_instructor' as add_instructor %}
+                <a href='{{ add_instructor }}' class="nav-link {% if request.path ==  add_instructor %}active{% endif %}">
+                  <i class='fas fa-list-ul' style='font-size:20px; color: red'>  </i>
+                  <p>
+                    Add Instructor
+                  </p>
+                </a>
+          </li>
+
+            <li class="nav-item">
+                {% url 'manage_instructor'  as manage_instructor %}
+                {% url 'edit_instructor' instructor_id=id as edit_instructor %}
+                <a href="{{ manage_instructor }}" class="nav-link {% if request.path ==  manage_instructor %}active{% endif %}
+                                                                   {% if request.path ==  edit_instructor %}active{% endif %}  ">
+                  <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Manage Instructor
+                  </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                {% url 'add_student' as add_student %}
+              <a href="{{ add_student }}" class="nav-link {% if request.path ==  add_student %}active{% endif %}">
+                  <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Add Students
+                  </p>
+              </a>
+          </li>
+
+            <li class="nav-item">
+                {% url 'manage_student' as  manage_student%}
+                {% url 'edit_student' student_id=id as edit_student %}
+                <a href="{{ manage_student }}" class="nav-link {% if request.path ==  manage_student %}active{% endif %}
+                                                                {% if request.path ==  edit_student %}active{% endif %}">
+                  <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Manage Students
+                  </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                {% url 'add_course' as add_course %}
+                <a href="{{ add_course }}" class="nav-link {% if request.path ==  add_course %}active{% endif %}">
+                  <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Add Course
+                  </p>
+                </a>
+             </li>
+
+            <li class="nav-item">
+                {% url 'manage_courses' as manage_courses %}
+                {% url 'edit_course' course_id=id as edit_course %}
+                <a href="{{ manage_courses }}" class="nav-link {% if request.path ==  manage_courses %}active{% endif %}
+                                                             {% if request.path ==  edit_course %}active{% endif %}">
+                  <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Manage Course
+                  </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                {% url 'manage_session' as manage_session %}
+                <a href="{{ manage_session }}" class="nav-link {% if request.path ==  manage_session %}active{% endif %}">
+                <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Manage Session Year
+                  </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                {% url 'admin_view_attendance' as admin_view_attendance %}
+                <a href="{{ admin_view_attendance }}" class="nav-link {% if request.path ==  admin_view_attendance %}active{% endif %}">
+                <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    View Attendance
+                  </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                {% url 'student_feedback_message' as student_feedback_message %}
+                <a href="{{ student_feedback_message }}" class="nav-link {% if request.path ==  student_feedback_message %}active{% endif %}">
+                <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Student Feedback
+                  </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                {% url 'instructor_feedback_message' as instructor_feedback_message %}
+                <a href="{{ instructor_feedback_message }}" class="nav-link {% if request.path ==  instructor_feedback_message %}active{% endif %}">
+                <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Instructor Feedback
+                  </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                {% url 'student_leave_view' as student_leave_view %}
+                <a href="{{ student_leave_view }}" class="nav-link {% if request.path ==  student_leave_view %}active{% endif %}">
+                <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Student Leave
+                  </p>
+                </a>
+            </li>
+
+           <li class="nav-item">
+                {% url 'instructor_leave_view' as instructor_leave_view %}
+                <a href="{{ instructor_leave_view }}" class="nav-link {% if request.path ==  instructor_leave_view %}active{% endif %}">
+                <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Instructor Leave
+                  </p>
+                </a>
+            </li>
+
+             <li class="nav-item">
+               {% url 'add_batch' as add_batch %}
+                <a href="{{ add_batch }}" class="nav-link {% if request.path ==  add_batch %}active{% endif %}">
+                  <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Add Batch
+                  </p>
+                </a>
+             </li>
+
+            <li class="nav-item">
+                {% url 'manage_batch' as manage_batch %}
+                {% url 'edit_batch' batch_id=id as edit_batch %}
+                <a href="{{ manage_batch }}" class="nav-link {% if request.path ==  manage_batch %}active{% endif %}
+                                                              {% if request.path ==  edit_batch %}active{% endif %}  ">
+                  <i class='fas fa-list-ul' style='font-size:20px; color: red'></i>
+                  <p>
+                    Manage Batch
+                  </p>
+                </a>
+             </li>
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

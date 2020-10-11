@@ -1,0 +1,79 @@
+{% extends 'instructor_template/instructor_home.html' %}
+{% block page_title %}
+    Feedback Message
+{% endblock page_title %}
+
+{% block main_content %}
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+              <div class="col-md-6">
+            <!-- general form elements -->
+                    <div class="card card-dark">
+
+                        <div class="card-header">
+                            <h1>Leave a feedback message</h1>
+                        </div>
+
+                      <form action="{% url 'instructor_feedback_save' %}" method="post">
+
+                        {% csrf_token %}
+
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label style="font-size: 20px">Feedback Message</label>
+                                <textarea class="form-control" rows="6" name="feedback_msg"></textarea>
+                            </div>
+
+                             <div class="form-group">
+                                  {% if messages %}
+                                    {% for message in messages %}
+                                    {% if message.tags == 'error' %}
+                                    <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                                    {% endif %}
+                                    {% if message.tags == 'success' %}
+                                    <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                                    {% endif %}
+                                    {% endfor %}
+                                  {% endif %}
+                             </div>
+                        </div>
+
+                        <div class="card-footer">
+                          <button type="submit" class="btn btn-dark btn-block" style="font-size: 25px" id="fetch_student">Leave a feedback message</button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="card card-white">
+                        <div class="card-header">
+                        <div class="table">
+                            <h3>Feedback History</h3>
+                            <table class="table">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Feedback Message</th>
+                                    <th>Feedback Reply</th>
+                                </tr>
+                                {% for row in feedback_data %}
+                                    <tr>
+                                        <td>{{ row.id }}</td>
+                                        <td>{{ row.feedback }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+              </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock main_content %}
+
+
+
+

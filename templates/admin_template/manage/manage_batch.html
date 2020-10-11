@@ -1,0 +1,67 @@
+{% extends 'admin_template/base_template.html' %}
+{% block page_title %}
+<h1>Manage Batch</h1>
+{% endblock page_title %}
+{% block main_content %}
+    <hr>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+         <div class="row">
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-header">
+                <h3>Batch Details</h3>
+
+                   <div class="row">
+                        <div class="col">
+                            <div class="card card-body">
+
+                                <form method="get">
+
+                                <button class="btn btn-primary" type="submit">Search</button>
+                              </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap table-bordered table-avatar">
+                  <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Course Name</th>
+                        <th>Batch Name</th>
+                        <th>Batch Time</th>
+                        <th>Instructor Name</th>
+                        <th>Edit</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for i in batches %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td>{{ i.course_id.course_name }}</td>
+                        <td>{{ i.batch_name }}</td>
+                        <td>{{ i.batch_time }}</td>
+                        <td>{{ i.instructor_id.first_name }} {{ i.instructor_id.last_name }}</td>
+                        <td><a href="/edit_batch/{{ i.id }}" class="btn btn-primary">Edit</a></td>
+
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock main_content %}
