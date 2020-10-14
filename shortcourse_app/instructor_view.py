@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.core import serializers
 from django.contrib import messages
+from datetime import datetime
+from uuid import uuid4
 
 
 def instructor_home(request):
@@ -313,13 +315,15 @@ def save_student_result(request):
 
 @csrf_exempt
 def fetch_result_student(request):
-    batch_id=request.POST.get('batch_id')
-    student_id=request.POST.get('student_id')
-    student_obj=Students.objects.get(admin=student_id)
-    result=StudentResult.objects.filter(student_id=student_obj.id,batch_id=batch_id).exists()
+    batch_id = request.POST.get('batch_id')
+    student_id = request.POST.get('student_id')
+    student_obj = Students.objects.get(admin=student_id)
+    result = StudentResult.objects.filter(student_id=student_obj.id, batch_id=batch_id).exists()
     if result:
-        result=StudentResult.objects.get(student_id=student_obj.id,batch_id=batch_id)
-        result_data={"exam_marks":result.subject_exam_marks}
+        result = StudentResult.objects.get(student_id=student_obj.id, batch_id=batch_id)
+        result_data = {"exam_marks": result.subject_exam_marks}
         return HttpResponse(json.dumps(result_data))
     else:
         return HttpResponse("False")
+
+

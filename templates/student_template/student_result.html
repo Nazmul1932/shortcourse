@@ -30,7 +30,7 @@ Result
                             <td>{{ row.batch_id.batch_name }}</td>
                             <td>{{ row.course_exam_marks }}</td>
                             <td>
-                                {% if row.course_exam_marks >= 80 %}
+                                {% if row.course_exam_marks >= 50 %}
                                 <span class="alert alert-success">PASS</span>
                                 {% else %}
                                  <span class="alert alert-danger">FAIL</span>

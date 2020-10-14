@@ -1,7 +1,6 @@
 from django.urls import path, include
 from . import views, admin_view, instructor_view, student_view, EditResultviewClass
 
-
 urlpatterns = [
     path('', views.login_user, name='login_user'),
     path('accounts/', include('django.contrib.auth.urls')),
@@ -9,7 +8,6 @@ urlpatterns = [
     path('do_login', views.do_login, name='do_login'),
     path('get_user_details/', views.get_user_details, name='get_user_details'),
     path('logout_user/', views.logout_user, name='logout_user'),
-
 
     # admins view
     path('add_instructor/', admin_view.add_instructor, name='add_instructor'),
@@ -35,9 +33,11 @@ urlpatterns = [
     path('manage_session/', admin_view.manage_session, name='manage_session'),
     path('add_session_save', admin_view.add_session_save, name='add_session_save'),
     path('student_feedback_message/', admin_view.student_feedback_message, name='student_feedback_message'),
-    path('student_feedback_message_reply/', admin_view.student_feedback_message_reply, name='student_feedback_message_reply'),
+    path('student_feedback_message_reply/', admin_view.student_feedback_message_reply,
+         name='student_feedback_message_reply'),
     path('instructor_feedback_message/', admin_view.instructor_feedback_message, name='instructor_feedback_message'),
-    path('instructor_feedback_message_reply/', admin_view.instructor_feedback_message_reply, name='instructor_feedback_message_reply'),
+    path('instructor_feedback_message_reply/', admin_view.instructor_feedback_message_reply,
+         name='instructor_feedback_message_reply'),
     path('check_user_email_exists/', admin_view.check_user_email_exists, name='check_user_email_exists'),
     path('check_username_exist/', admin_view.check_username_exist, name='check_username_exist'),
     path('student_leave_view/', admin_view.student_leave_view, name='student_leave_view'),
@@ -54,7 +54,6 @@ urlpatterns = [
     path('admin_profile/', admin_view.admin_profile, name='admin_profile'),
     path('admin_profile_save/', admin_view.admin_profile_save, name='admin_profile_save'),
 
-
     # instructors view
     path('instructor_home/', instructor_view.instructor_home, name='instructor_home'),
     path('attendance/', instructor_view.attendance, name='attendance'),
@@ -63,24 +62,25 @@ urlpatterns = [
     path('get_attendance_date/', instructor_view.get_attendance_date, name='get_attendance_date'),
     path('update_attendance/', instructor_view.update_attendance, name='update_attendance'),
     path('get_attendance_student/', instructor_view.get_attendance_student, name='get_attendance_student'),
-    path('save_update_attendance_data/', instructor_view.save_update_attendance_data, name='save_update_attendance_data'),
+    path('save_update_attendance_data/', instructor_view.save_update_attendance_data,
+         name='save_update_attendance_data'),
     path('instructor_apply_leave/', instructor_view.instructor_apply_leave, name='instructor_apply_leave'),
-    path('instructor_apply_leave_save/', instructor_view.instructor_apply_leave_save, name='instructor_apply_leave_save'),
+    path('instructor_apply_leave_save/', instructor_view.instructor_apply_leave_save,
+         name='instructor_apply_leave_save'),
     path('instructor_feedback/', instructor_view.instructor_feedback, name='instructor_feedback'),
     path('instructor_feedback_save/', instructor_view.instructor_feedback_save, name='instructor_feedback_save'),
     path('instructor_profile/', instructor_view.instructor_profile, name='instructor_profile'),
     path('instructor_profile_save/', instructor_view.instructor_profile_save, name='instructor_profile_save'),
     path('instructor_add_result/', instructor_view.instructor_add_result, name='instructor_add_result'),
     path('save_student_result/', instructor_view.save_student_result, name='save_student_result'),
-    # path('edit_student_result', EditResultviewClass.as_view(), name="edit_student_result"),
-    path('fetch_result_student',instructor_view.fetch_result_student, name="fetch_result_student"),
-
+    path('fetch_result_student', instructor_view.fetch_result_student, name="fetch_result_student"),
 
 
     # students view
     path('student_home/', student_view.student_home, name='student_home'),
     path('student_view_attendance/', student_view.student_view_attendance, name='student_view_attendance'),
-    path('student_view_attendance_post/', student_view.student_view_attendance_post, name='student_view_attendance_post'),
+    path('student_view_attendance_post/', student_view.student_view_attendance_post,
+         name='student_view_attendance_post'),
     path('student_apply_leave/', student_view.student_apply_leave, name='student_apply_leave'),
     path('student_apply_leave_save/', student_view.student_apply_leave_save, name='student_apply_leave_save'),
     path('student_feedback/', student_view.student_feedback, name='student_feedback'),

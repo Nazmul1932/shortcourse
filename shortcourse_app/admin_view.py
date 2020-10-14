@@ -6,12 +6,12 @@ import json
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from shortcourse_app.models import CustomUser, Courses, Batch, Instructors, Subjects, Students
+from .models import *
 from shortcourse_app.forms import *
 
 
 def admin_home(request):
-    student_count = Students.objects.all().count()
+
     instructor_count = Instructors.objects.all().count()
     batch_count = Batch.objects.all().count()
     course_count = Courses.objects.all().count()
@@ -49,6 +49,7 @@ def admin_home(request):
         instructor_name_list.append(instructor.admin.username)
 
     students_all = Students.objects.all()
+    student_count = students_all.count()
     attendance_present_list_student = []
     attendance_absent_list_student = []
     student_name_list = []
@@ -118,7 +119,8 @@ def edit_instructor(request, instructor_id):
     instructor = Instructors.objects.get(admin=instructor_id)
     courses = Courses.objects.all()
 
-    return render(request, 'admin_template/editing/edit_instructor.html', {'instructor': instructor, 'id': instructor_id, 'courses': courses})
+    return render(request, 'admin_template/editing/edit_instructor.html',
+                  {'instructor': instructor, 'id': instructor_id, 'courses': courses})
 
 
 def edit_instructor_save(request):
@@ -237,7 +239,8 @@ def edit_batch(request, batch_id):
     batches = Batch.objects.get(id=batch_id)
     instructors = CustomUser.objects.filter(user_type=2)
 
-    return render(request, 'admin_template/editing/edit_batch.html', {'courses': courses, 'batches': batches, 'id': batch_id, 'instructors': instructors})
+    return render(request, 'admin_template/editing/edit_batch.html',
+                  {'courses': courses, 'batches': batches, 'id': batch_id, 'instructors': instructors})
 
 
 def edit_batch_save(request):
@@ -314,7 +317,8 @@ def add_student_save(request):
             profile_pic_url = fs.url(filename)
 
             try:
-                user = CustomUser.objects.create_user(username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=3)
+                user = CustomUser.objects.create_user(username=username, password=password, email=email,
+                                                      last_name=last_name, first_name=first_name, user_type=3)
                 user.students.address = address
                 user.students.ssc_gpa = ssc_gpa
                 user.students.hsc_gpa = hsc_gpa
@@ -367,7 +371,8 @@ def edit_student(request, student_id):
     form.fields['session_year_id'].initial = student.session_year_id.id
     form.fields['batch'].initial = student.batch
 
-    return render(request, 'admin_template/editing/edit_student.html', {'form': form, 'id': student_id, 'username': student.admin.username})
+    return render(request, 'admin_template/editing/edit_student.html',
+                  {'form': form, 'id': student_id, 'username': student.admin.username})
 
 
 def edit_student_save(request):
@@ -442,13 +447,14 @@ def edit_student_save(request):
                 del request.session['student_id']
                 messages.success(request, "Successfully Edited student")
                 return HttpResponseRedirect(reverse('edit_student', kwargs={'student_id': student_id}))
-            except :
+            except:
                 messages.error(request, "Failed to Edited student")
                 return HttpResponseRedirect(reverse('edit_student', kwargs={'student_id': student_id}))
         else:
             form - EditStudentForm(request.POST)
             student = Students.objects.get(admin=student_id)
-            return render(request, 'admin_template/editing/edit_student.html', {'form': form, 'id': student_id, 'username': student.admin.username})
+            return render(request, 'admin_template/editing/edit_student.html',
+                          {'form': form, 'id': student_id, 'username': student.admin.username})
 
 
 def manage_students(request):
@@ -468,7 +474,8 @@ def add_session_save(request):
         session_start_year = request.POST.get('session_start')
         session_end_year = request.POST.get('session_end')
         try:
-            session_year_model = SessionYearModel(session_start_year=session_start_year, session_end_year=session_end_year)
+            session_year_model = SessionYearModel(session_start_year=session_start_year,
+                                                  session_end_year=session_end_year)
             session_year_model.save()
             messages.success(request, "Successfully Added Session")
             return HttpResponseRedirect(reverse('manage_session'))
@@ -486,11 +493,11 @@ def check_user_email_exists(request):
     else:
         return HttpResponse(False)
 
-    
+
 @csrf_exempt
 def check_username_exist(request):
-    username=request.POST.get("username")
-    user_obj=CustomUser.objects.filter(username=username).exists()
+    username = request.POST.get("username")
+    user_obj = CustomUser.objects.filter(username=username).exists()
     if user_obj:
         return HttpResponse(True)
     else:
@@ -515,23 +522,24 @@ def student_feedback_message_reply(request):
         feedback_student.feedback_reply = feedback_msg
         feedback_student.save()
         return HttpResponse('True')
-    except :
+    except:
         return HttpResponse('False')
 
 
 def instructor_feedback_message(request):
     feedback_instructors = FeedBackInstructors.objects.all()
-    return render(request, "admin_template/instructor_feedback_template.html", {"feedback_instructors": feedback_instructors})
+    return render(request, "admin_template/instructor_feedback_template.html",
+                  {"feedback_instructors": feedback_instructors})
 
 
 @csrf_exempt
 def instructor_feedback_message_reply(request):
-    feedback_id=request.POST.get("id")
-    feedback_message=request.POST.get("message")
+    feedback_id = request.POST.get("id")
+    feedback_message = request.POST.get("message")
 
     try:
-        feedback=FeedBackInstructors.objects.get(id=feedback_id)
-        feedback.feedback_reply=feedback_message
+        feedback = FeedBackInstructors.objects.get(id=feedback_id)
+        feedback.feedback_reply = feedback_message
         feedback.save()
         return HttpResponse("True")
     except:
@@ -554,27 +562,27 @@ def student_approve_leave(request, leave_id):
 
 
 def student_disapprove_leave(request, leave_id):
-    leave=LeaveReportStudent.objects.get(id=leave_id)
-    leave.leave_status=2
+    leave = LeaveReportStudent.objects.get(id=leave_id)
+    leave.leave_status = 2
     leave.save()
     return HttpResponseRedirect(reverse("student_leave_view"))
 
 
 def instructor_leave_view(request):
-    leaves=LeaveReportInstructors.objects.all()
+    leaves = LeaveReportInstructors.objects.all()
     return render(request, "admin_template/instructor_leave_view.html", {"leaves": leaves})
 
 
 def instructor_approve_leave(request, leave_id):
-    leave=LeaveReportInstructors.objects.get(id=leave_id)
-    leave.leave_status=1
+    leave = LeaveReportInstructors.objects.get(id=leave_id)
+    leave.leave_status = 1
     leave.save()
     return HttpResponseRedirect(reverse("instructor_leave_view"))
 
 
 def instructor_disapprove_leave(request, leave_id):
-    leave=LeaveReportInstructors.objects.get(id=leave_id)
-    leave.leave_status=2
+    leave = LeaveReportInstructors.objects.get(id=leave_id)
+    leave.leave_status = 2
     leave.save()
     return HttpResponseRedirect(reverse("instructor_leave_view"))
 
@@ -607,14 +615,16 @@ def admin_get_attendance_date(request):
 
 @csrf_exempt
 def admin_get_attendance_student(request):
-    attendance_date=request.POST.get("attendance_date")
-    attendance=Attendance.objects.get(id=attendance_date)
+    attendance_date = request.POST.get("attendance_date")
+    attendance = Attendance.objects.get(id=attendance_date)
 
-    attendance_data=AttendanceReport.objects.filter(attendance_id=attendance)
-    list_data=[]
+    attendance_data = AttendanceReport.objects.filter(attendance_id=attendance)
+    list_data = []
 
     for student in attendance_data:
-        data_small={"id": student.student_id.admin.id, "name": student.student_id.admin.first_name+" "+student.student_id.admin.last_name, "status":student.status}
+        data_small = {"id": student.student_id.admin.id,
+                      "name": student.student_id.admin.first_name + " " + student.student_id.admin.last_name,
+                      "status": student.status}
         list_data.append(data_small)
     return JsonResponse(json.dumps(list_data), safe=False)
 
@@ -635,7 +645,7 @@ def admin_profile_save(request):
             custom_user = CustomUser.objects.get(id=request.user.id)
             custom_user.first_name = first_name
             custom_user.last_name = last_name
-            if password is not None and password!= "":
+            if password is not None and password != "":
                 custom_user.set_password(password)
             custom_user.save()
             messages.success(request, "Successfully Updated Profile")
@@ -643,6 +653,3 @@ def admin_profile_save(request):
         except:
             messages.error(request, "Failed to Update Profile")
             return HttpResponseRedirect(reverse("admin_profile"))
-
-
-
