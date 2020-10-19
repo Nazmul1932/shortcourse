@@ -58,16 +58,6 @@ class Instructors(models.Model):
     objects = models.Manager()
 
 
-class Subjects(models.Model):
-    id = models.AutoField(primary_key=True)
-    subject_name = models.CharField(max_length=255)
-    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, default=1)
-    instructor_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
-    objects = models.Manager()
-
-
 class Students(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     id = models.AutoField(primary_key=True)
